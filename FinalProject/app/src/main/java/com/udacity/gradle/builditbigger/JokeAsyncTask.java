@@ -17,8 +17,14 @@ import java.io.IOException;
 public class JokeAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
-
-    @Override
+	private JokeLoadedListener mJokeLoadedListener;
+	
+	public interface JokeLoadedListener {
+		void onJokeLoaded(String joke);
+	}
+	
+	
+	@Override
     protected String doInBackground(Context... contexts) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
@@ -48,9 +54,11 @@ public class JokeAsyncTask extends AsyncTask<Context, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        Intent intent = new Intent(context,JokeDisplayActivity.class);
-        intent.putExtra(JokeDisplayActivity.INTENT_EXTRA_JOKE,result);
-        context.startActivity(intent);
+    protected void onPostExecute(final String result) {
+		mJokeLoadedListener.onJokeLoaded(result);
     }
+	
+	public void setOnJokeLoadedListener(JokeLoadedListener onJokeLoadedListener) {
+		this.mJokeLoadedListener = onJokeLoadedListener;
+	}
 }
