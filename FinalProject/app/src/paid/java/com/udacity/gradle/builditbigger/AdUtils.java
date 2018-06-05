@@ -10,7 +10,7 @@ import android.view.View;
 public class AdUtils {
 	
 	public interface AdClosedListener{
-		public void onAdClosed();
+		void onAdClosed();
 	}
 	
 	public static void createAd(View rootView){

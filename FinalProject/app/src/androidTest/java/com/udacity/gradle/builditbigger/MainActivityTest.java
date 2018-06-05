@@ -2,8 +2,9 @@ package com.udacity.gradle.builditbigger;
 
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
-import android.support.test.rule.ActivityTestRule;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.example.jokedispenser.JokeDispenser;
 import com.example.jokedisplay.JokeDisplayActivity;
@@ -16,14 +17,9 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.util.Log;
-
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.core.AllOf.allOf;
 
 /**
  * Erzeugt von M. Fengels am 05.06.2018.
@@ -44,12 +40,13 @@ public class MainActivityTest {
 		IdlingRegistry.getInstance().register(mIdlingResource);
 	}
 	
+	/**
+	 * Checks if the Intent has the correct Extra
+	 */
 	@Test
 	public void clickTellJokeButton() {
 		onView(withId(R.id.btn_tell_joke)).perform(click());
-		Log.w("Idling", "intendentation gets checked");
 		intended(hasExtra(JokeDisplayActivity.INTENT_EXTRA_JOKE, new JokeDispenser().getJoke()));
-		Log.w("Idling", "intendentation checked");
 	}
 	
 	@After

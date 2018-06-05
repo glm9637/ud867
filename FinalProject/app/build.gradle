@@ -54,11 +54,11 @@ dependencies {
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.google.http-client:google-http-client-android:1.23.0'
+    implementation 'com.google.code.findbugs:jsr305:3.0.1'
     implementation ('com.google.api-client:google-api-client:1.23.0') {
         exclude module: 'guava-jdk5'
     }
-    implementation 'com.google.http-client:google-http-client-android:1.23.0'
-    implementation 'com.google.code.findbugs:jsr305:3.0.1'
     implementation project(':jokedisplay')
     implementation project(':backend')
     implementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'

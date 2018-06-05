@@ -13,7 +13,11 @@ public class MainActivityFragment extends Fragment {
 
     public MainActivityFragment() {
     }
-
+	
+	/**
+	 * Creates the Banner Ad
+	 * @return the RootView of the Fragment
+	 */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

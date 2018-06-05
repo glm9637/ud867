@@ -1,11 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 
-import com.example.jokedisplay.JokeDisplayActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -14,18 +10,23 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
-public class JokeAsyncTask extends AsyncTask<Context, Void, String> {
+public class JokeAsyncTask extends AsyncTask<Void, Void, String> {
     private static MyApi myApiService = null;
-    private Context context;
 	private JokeLoadedListener mJokeLoadedListener;
 	
+	/**
+	 * Interface to Notify the Ui that the Joke was loaded
+	 */
 	public interface JokeLoadedListener {
 		void onJokeLoaded(String joke);
 	}
 	
-	
+	/**
+	 * Retrieve the Data from the Api
+	 * @return the loaded Joke
+	 */
 	@Override
-    protected String doInBackground(Context... contexts) {
+    protected String doInBackground(Void... voids) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -44,16 +45,18 @@ public class JokeAsyncTask extends AsyncTask<Context, Void, String> {
             myApiService = builder.build();
         }
 
-        context = contexts[0];
-
         try {
            return myApiService.dispenseJoke().execute().getData();
         } catch (IOException e) {
             return e.getMessage();
         }
     }
-
-    @Override
+	
+	/**
+	 * Notify the UI that the joke was loaded
+	 * @param result the loaded Joke
+	 */
+	@Override
     protected void onPostExecute(final String result) {
 		mJokeLoadedListener.onJokeLoaded(result);
     }

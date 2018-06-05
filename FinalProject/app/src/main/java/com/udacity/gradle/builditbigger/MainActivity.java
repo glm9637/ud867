@@ -36,7 +36,10 @@ public class MainActivity extends AppCompatActivity implements JokeAsyncTask.Jok
 		}
 		return mIdlingResource;
 	}
-
+	
+	/**
+	 * Prepare the InterstitialAd to be Displayed and create a Link to the ProgressBar
+	 */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,19 +72,27 @@ public class MainActivity extends AppCompatActivity implements JokeAsyncTask.Jok
 	
 	    
     }
-
-    public void tellJoke(View view) {
+	
+	/**
+	 * Gets called by clicking on the Button
+	 * This Method displays the ProgressBar and starts a AsyncTask to load a Joke
+	 * @param view
+	 */
+	public void tellJoke(View view) {
 		mProgressBar.setVisibility(View.VISIBLE);
 		if(mIdlingResource!=null){
 			mIdlingResource.setIdleState(false);
-			Log.w("Idling", "idling is false");
 		}
         JokeAsyncTask asyncTask = new JokeAsyncTask();
 		asyncTask.setOnJokeLoadedListener(this);
-		asyncTask.execute(this);
+		asyncTask.execute();
     }
 	
-	
+	/**
+	 * When the Joke is loaded the Progressbar can be hidden and the Interstitial Ad gets displayed.
+	 * When the app is clicked away a new Activity is started with the Joke as Extra Parameter
+	 * @param joke
+	 */
 	@Override
 	public void onJokeLoaded(final String joke) {
 		mProgressBar.setVisibility(View.GONE);
@@ -92,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements JokeAsyncTask.Jok
 				intent.putExtra(JokeDisplayActivity.INTENT_EXTRA_JOKE,joke);
 				if(mIdlingResource!=null) {
 					mIdlingResource.setIdleState(true);
-					Log.w("Idling", "idling is true");
 				}
 				startActivity(intent);
 			}

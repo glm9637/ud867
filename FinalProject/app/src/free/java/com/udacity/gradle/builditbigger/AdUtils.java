@@ -28,6 +28,9 @@ public class AdUtils {
 		mAdView.loadAd(generateRequest());
 	}
 	
+	/**
+	 * prepares the InterstitialAd so it is ready to be shown as early as possible
+	 */
 	public static void prepareInterstitialAd(@NonNull Context context){
 		if(mInterstitialAd == null) {
 			mInterstitialAd = new InterstitialAd(context);
@@ -36,6 +39,11 @@ public class AdUtils {
 		mInterstitialAd.loadAd(generateRequest());
 	}
 	
+	
+	/**
+	 * Displays the Interstitial Ad
+	 * @param adClosedListener the Listener which gets notified when the app gets closed
+	 */
 	public static void showInterstitialAd(final AdClosedListener adClosedListener){
 		if(mInterstitialAd.isLoaded()){
 			mInterstitialAd.setAdListener(new AdListener() {
@@ -50,6 +58,9 @@ public class AdUtils {
 		}
 	}
 	
+	/**
+	 * generates a Ad Request
+	 */
 	private static AdRequest generateRequest(){
 		return new AdRequest.Builder()
 				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
