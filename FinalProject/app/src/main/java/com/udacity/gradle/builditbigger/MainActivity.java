@@ -99,12 +99,10 @@ public class MainActivity extends AppCompatActivity implements JokeAsyncTask.Jok
 		AdUtils.showInterstitialAd(new AdUtils.AdClosedListener() {
 			@Override
 			public void onAdClosed() {
-				Intent intent = new Intent(MainActivity.this,JokeDisplayActivity.class);
-				intent.putExtra(JokeDisplayActivity.INTENT_EXTRA_JOKE,joke);
 				if(mIdlingResource!=null) {
 					mIdlingResource.setIdleState(true);
 				}
-				startActivity(intent);
+				startActivity(JokeDisplayActivity.createIntent(MainActivity.this,joke));
 			}
 		});
 	}

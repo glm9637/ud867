@@ -20,7 +20,6 @@ public class AdUtils {
 	
 	public static void createAd(View adView){
 		AdView mAdView = (AdView) adView;
-		
 		// Create an ad request. Check logcat output for the hashed device ID to
 		// get test ads on a physical device. e.g.
 		// "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
@@ -34,7 +33,7 @@ public class AdUtils {
 	public static void prepareInterstitialAd(@NonNull Context context){
 		if(mInterstitialAd == null) {
 			mInterstitialAd = new InterstitialAd(context);
-			mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+			mInterstitialAd.setAdUnitId(context.getString(R.string.banner_ad_unit_id));
 		}
 		mInterstitialAd.loadAd(generateRequest());
 	}
